@@ -1,4 +1,3 @@
-```markdown
 # Real-Time Credit Risk Simulation Pipeline
 
 ---
@@ -33,8 +32,6 @@ The workflow simulates **real-time data ingestion and processing**, enabling tes
 
 ## Project Workflow
 
-```
-
 CSV Dataset
 │
 ▼
@@ -58,15 +55,13 @@ Business Recommendations / Results DataFrame
 ▼
 Optional: Dashboard / Metrics / Logs
 
-````
-
 ---
 
 ## Getting Started
 
 1. **Clone the repository:**  
 ```bash
-git clone https://github.com/yourusername/credit-risk-streaming-pipeline.git
+git clone https://github.com/yourusername/credit-risk-pipeline.git
 ````
 
 2. **Install dependencies:**
@@ -101,5 +96,4 @@ pip install -r requirements.txt
 * Introduce **multiple ML models** for ensemble scoring or risk comparison.
 
 ---
-
 
