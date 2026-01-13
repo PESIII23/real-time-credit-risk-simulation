@@ -5,7 +5,7 @@
 ## Project Overview
 This project demonstrates a **lightweight, production-style streaming pipeline** for credit risk analysis. Using historical credit data, synthetic events are generated and pushed into an **in-memory queue**, consumed by a pipeline, preprocessed into a DataFrame, scored with a **logistic regression model**, and transformed into **actionable business recommendations**.  
 
-The workflow simulates **real-time data ingestion and processing**, enabling testing of incremental ML scoring, feature engineering, and data validation in a modular architecture. This design mirrors production-ready ETL and analytics pipelines used in fintech and real-time decision systems.  
+The workflow simulates **real-time data ingestion and processing**, enabling testing of incremental ML scoring, feature engineering, and data validation in a modular architecture. This design mirrors production-ready ETL and analytics pipelines used in real-time decision systems.  
 
 ---
 
