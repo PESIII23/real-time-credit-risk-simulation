@@ -1,4 +1,4 @@
-# Real-Time Credit Risk Simulation Pipeline
+# Real-Time Credit Risk Simulation
 
 ---
 
