@@ -4,10 +4,11 @@ Pull events from the queue, batch them, store them, and apply ML scoring.
 import os
 import pandas as pd
 import random
+from pathlib import Path
 # from models import LogisticModel
 
 class Consumer:
-    def __init__(self, queue, batch_size=100, delay=float):
+    def __init__(self, queue, batch_size=10000, delay=float):
         self.queue = queue
         self.batch_size = batch_size
         self.df = pd.DataFrame()
@@ -18,19 +19,24 @@ class Consumer:
         """Consume events from the queue in batches, export to parquet"""
         batch = []
 
-        while not self.queue.empty():
+        print(f"Event consuming has initiated...")
+        while True:
             event = self.queue.pop()
+
+            if event is None:
+                break
+
             batch.append(event)
 
             if len(batch) >= self.batch_size:
                 self.process_batch(batch)
+                self.export_parquet()
                 print
                 batch = []
 
         if batch:
             self.process_batch(batch)
-            
-        self.export_parquet()
+            self.export_parquet()
 
     def process_batch(self, batch):
         temp_df = pd.DataFrame(batch)
@@ -46,13 +52,20 @@ class Consumer:
         # if not self.df.empty:
         #     self.df['risk_score'] = self.model.predict(self.df)
 
+
     def export_parquet(self):
-        """Export the dataframe to a parquet file"""
-        folder_path = 'src/data/processed'
-        file_name = 'processed_df.parquet'
-        full_path = os.path.join(folder_path, file_name)
+        """Export the dataframe to a parquet file (works in notebooks and scripts)"""
 
-        os.makedirs(folder_path, exist_ok=True)
+        # Define project root (adjust this path to your project root)
+        project_root = Path('/Users/phillipsmith/Desktop/pythonProjects/real-time-credit-risk-simulation')
 
-        self.df.to_parquet(full_path, engine='fastparquet', index=False)
-        print(f"Exported processed dataframe to {full_path}\n")
+        # Folder to store processed data
+        folder_path = project_root / 'src' / 'data' / 'processed'
+        folder_path.mkdir(parents=True, exist_ok=True)  # ensure folder exists
+
+        # Full path to parquet
+        file_path = folder_path / 'processed_df.parquet'
+
+        # Write the dataframe
+        self.df.to_parquet(file_path, engine='fastparquet', index=False)
+

@@ -1,27 +1,29 @@
 """
 Wire everything together and run the full simulation.
 """
+import threading
+import os
+from src.events.queue_manager import EventQueue
+from src.events.producer import Producer
+from src.events.consumer import Consumer
 
-from events.queue_manager import EventQueue
-from events.producer import Producer
-from events.consumer import Consumer
+excel_path = os.path.abspath('/Users/phillipsmith/Desktop/pythonProjects/real-time-credit-risk-simulation/src/data/raw/dataset_project_1.xlsx')
 
-excel_path = 'src/data/raw/dataset_project_1.xlsx'
-
-def run_pipeline(excel_path):
+def run_pipeline():
     queue = EventQueue()
-
-    print("Producing events...\n")
     producer = Producer(excel_path, queue)
-    producer.generate_events()
-
-    print("Consuming events...\n")
     consumer = Consumer(queue)
-    consumer.consume_events()
 
-    if queue.full():
-        print("Queue is full, cannot add more events.\n Simulation Stopped.")
+    producer_thread = threading.Thread(target=producer.generate_events)
+    consumer_thread = threading.Thread(target=consumer.consume_events)
 
-if __name__ == "__main__":
-    final_df = run_pipeline('src/data/raw/dataset_project_1.xlsx')
-    print(final_df)
+    producer_thread.start()
+    consumer_thread.start()
+
+    producer_thread.join()
+    consumer_thread.join()
+
+    print("Simulation Complete. Processed Dataframe shape:", consumer.df.shape)
+
+if __name__ == "__main__" or "ipykernel" in __name__:
+    final_df = run_pipeline()
