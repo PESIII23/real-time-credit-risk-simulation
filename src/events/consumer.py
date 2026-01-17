@@ -1,6 +1,7 @@
 """
 Pull events from the queue, batch them, store them, and apply ML scoring.
 """
+import os
 import pandas as pd
 import random
 # from models import LogisticModel
@@ -14,7 +15,7 @@ class Consumer:
         # self.model = LogisticModel()
 
     def consume_events(self):
-        """Consume events from the queue in batches"""
+        """Consume events from the queue in batches, export to parquet"""
         batch = []
 
         while not self.queue.empty():
@@ -28,6 +29,8 @@ class Consumer:
 
         if batch:
             self.process_batch(batch)
+            
+        self.export_parquet()
 
     def process_batch(self, batch):
         temp_df = pd.DataFrame(batch)
@@ -42,3 +45,14 @@ class Consumer:
         # """Apply ML model"""
         # if not self.df.empty:
         #     self.df['risk_score'] = self.model.predict(self.df)
+
+    def export_parquet(self):
+        """Export the dataframe to a parquet file"""
+        folder_path = 'src/data/processed'
+        file_name = 'processed_df.parquet'
+        full_path = os.path.join(folder_path, file_name)
+
+        os.makedirs(folder_path, exist_ok=True)
+
+        self.df.to_parquet(full_path, engine='fastparquet', index=False)
+        print(f"Exported processed dataframe to {full_path}\n")

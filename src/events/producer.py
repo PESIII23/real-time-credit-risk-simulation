@@ -18,5 +18,5 @@ class Producer:
             event = row.to_dict()
             self.queue.push(event)
             print(f"Produced event: {event}\n")
-            self.delay = random.uniform(0.0, 0.01)
+            self.delay = random.uniform(0.0, 0.001)
             time.sleep(self.delay)
