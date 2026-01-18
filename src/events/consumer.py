@@ -1,5 +1,5 @@
 """
-Pull events from the queue, batch them, store them, and apply ML scoring.
+Pull events in batches from the queue, process them, store them, and apply ML.
 """
 import os
 import pandas as pd
@@ -20,7 +20,7 @@ class Consumer:
         """Consume events from the queue in batches, export to parquet"""
         batch = []
 
-        print(f"Event consuming has initiated...")
+        print(f"Event consuming has initiated...\n")
         while True:
             event = self.queue.pop()
 
@@ -45,7 +45,7 @@ class Consumer:
         cleaned_data = data_cleaning.clean_data(temp_df)
 
         self.df = pd.concat([self.df, cleaned_data], ignore_index=True)
-        print(f"Consumed batch of {len(batch)} events. Total events processed: {len(self.df)}\n")
+        print(f"\nConsumed batch of {len(batch)} events. \nTotal events processed: {len(self.df)}")
         self.delay = random.uniform(0.0, 0.001)
 
     def export_parquet(self):

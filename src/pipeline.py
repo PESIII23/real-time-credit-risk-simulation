@@ -1,5 +1,5 @@
 """
-Wire everything together and run the full simulation.
+Runs the producer-consumer pipeline in separate threads to concurrently generate and process events from the Excel file.
 """
 import threading
 import os
@@ -22,8 +22,6 @@ def run_pipeline():
 
     producer_thread.join()
     consumer_thread.join()
-
-    print("Simulation Complete. Processed Dataframe shape:", consumer.df.shape)
 
 if __name__ == "__main__" or "ipykernel" in __name__:
     final_df = run_pipeline()

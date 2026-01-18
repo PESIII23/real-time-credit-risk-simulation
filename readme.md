@@ -102,5 +102,6 @@ pip install -r requirements.txt
 ## Support
 
 - Email: [pesmithiii7@gmail.com]
-- Documentation: [Project Guide](https://docs.google.com/document/d/1THnSO0ToOSilKkFMVdxOPsPneEEmo8uHq1Ifd7nTIP0/edit?usp=sharing)
+- Documentation: 
+    [Milestone 1](https://docs.google.com/document/d/1THnSO0ToOSilKkFMVdxOPsPneEEmo8uHq1Ifd7nTIP0/edit?usp=sharing)
 - Repository: [GitHub](https://github.com/PESIII23/real-time-credit-risk-simulation)
