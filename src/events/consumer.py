@@ -20,7 +20,7 @@ class Consumer:
         """Consume events from the queue in batches, export to parquet"""
         batch = []
 
-        print(f"Event consuming has initiated...\n")
+        print(f"Event consuming has initiated.")
         while True:
             event = self.queue.pop()
 
@@ -37,6 +37,7 @@ class Consumer:
         if batch:
             self.process_batch(batch)
             self.export_parquet()
+            print("Processing is complete.\n")
 
     def process_batch(self, batch):
         """Clean the incoming batch and append to the existing df"""
@@ -45,8 +46,8 @@ class Consumer:
         cleaned_data = data_cleaning.clean_data(temp_df)
 
         self.df = pd.concat([self.df, cleaned_data], ignore_index=True)
-        print(f"\nConsumed batch of {len(batch)} events. \nTotal events processed: {len(self.df)}")
-        self.delay = random.uniform(0.0, 0.001)
+        # print(f"\nConsumed batch of {len(batch)} events. \nTotal events processed: {len(self.df)}")
+        self.delay = random.uniform(0.0, 0.0001)
 
     def export_parquet(self):
         """Export the updated dataframe to a parquet file"""

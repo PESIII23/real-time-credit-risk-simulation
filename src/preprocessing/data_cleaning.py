@@ -19,4 +19,5 @@ def clean_data(df):
         '# Overdue 90+ Days': 'Days Overdue (90+)',
         'Serious Delinquencies in past 2 years': 'Delinquencies (last 2 years)'
     })
+
     return df
