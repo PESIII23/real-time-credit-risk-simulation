@@ -1,18 +1,11 @@
 """
+A utility class providing static methods for creating various plots from a DataFrame.
 """
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 class Plots:
-    def __init__(self, df, ax, fig, title, x_label, y_label):
-        self.df = df
-        self.ax = ax
-        self.fig = fig
-        self.title = title
-        self.x_label = x_label
-        self.y_label = y_label
-
     def bar_graph(df, column, x_label: str, y_label: str, title: str = None, figsize=(10, 6)):
         """
         Initialize figure and axes for animated live plotting.
