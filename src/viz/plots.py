@@ -34,8 +34,8 @@ class Plots:
         clean_col = df[column].dropna()
         max_bin = int(clean_col.max() // 10)
 
-        value_bin = {i: 0 for i in range(max_bin + 1)}
-        bins = [f"{i*10}-{i*10+9}" for i in range(max_bin + 1)]
+        value_bin = {i: 0 for i in range(2, max_bin + 1)}
+        bins = [f"{i*10}-{i*10+9}" for i in range(2, max_bin + 1)]
 
         for value in clean_col:
             value_bin[int(value) // 10] += 1
