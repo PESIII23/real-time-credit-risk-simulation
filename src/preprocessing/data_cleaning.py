@@ -1,3 +1,5 @@
+import pandas as pd
+
 """
 Cleans the input DataFrame by:
     - updating headers
@@ -6,7 +8,7 @@ Cleans the input DataFrame by:
     - correcting data types
 """
 
-def clean_data(df):
+def clean_raw_data(df):
     df = df.copy()
 
     df = df.rename(columns={
@@ -20,6 +22,18 @@ def clean_data(df):
         'Serious Delinquencies in past 2 years': 'serious_delinquencies_past_2_years'
     })
 
-    df = df.dropna()
+    df = is_missing_value(df, col_orig='monthly_revenue', col_bool='is_missing_revenue')
 
+    df = is_missing_value(df, col_orig='rated_exposure', col_bool='is_missing_rated_exposure')
+    df = fill_missing_value(df, col='rated_exposure')
+
+    return df
+
+def is_missing_value(df, col_orig: str = None, col_bool: str = None):
+    df[col_bool] = df[col_orig].isna().astype(int)
+    return df
+
+def fill_missing_value(df, col: str = None):
+    col_mean = df[col].mean()
+    df[col] = df[col].fillna(col_mean)
     return df

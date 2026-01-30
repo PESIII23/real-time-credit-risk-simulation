@@ -43,8 +43,7 @@ class Consumer:
         """Clean the incoming batch and append to the existing df"""
         temp_df = pd.DataFrame(batch)
 
-        cleaned_data = data_cleaning.clean_data(temp_df)
-
+        cleaned_data = data_cleaning.clean_raw_data(temp_df)
         self.df = pd.concat([self.df, cleaned_data], ignore_index=True)
         # print(f"\nConsumed batch of {len(batch)} events. \nTotal events processed: {len(self.df)}")
         self.delay = random.uniform(0.0, 0.0001)
