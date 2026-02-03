@@ -7,7 +7,7 @@ import seaborn as sns
 import numpy as np
 
 class Plots:
-    def plot_age_range_comparison_avg(df, column_1, column_2, figsize=(11, 6)):
+    def plot_age_range_comparison_avg(df, column_1, column_2, figsize=(9, 4)):
     
         fig, ax = plt.subplots(figsize=figsize)
         ax.set_xlabel(f'{column_1}')
@@ -44,7 +44,7 @@ class Plots:
 
         return ax
 
-    def plot_days_overdue_counts(df, column, x_label: str, y_label: str, title: str = None, figsize=(15, 10)):
+    def plot_days_overdue_counts(df, column, x_label: str, y_label: str, title: str = None, figsize=(9, 4)):
 
         if column not in df.columns or df.empty:
             raise ValueError("Invalid column or empty DataFrame")
@@ -62,7 +62,7 @@ class Plots:
 
         return fig, ax
     
-    def plot_age_ranges(df, column, title: str = None, figsize=(10, 10)):
+    def plot_age_ranges(df, column, title: str = None, figsize=(7, 7)):
         
         if column not in df.columns or df.empty:
             raise ValueError("Invalid column or empty DataFrame")

@@ -25,7 +25,7 @@ def clean_raw_data(df):
     df = is_missing_value(df, col_orig='monthly_revenue', col_bool='is_missing_revenue')
 
     df = is_missing_value(df, col_orig='rated_exposure', col_bool='is_missing_rated_exposure')
-    df = fill_missing_value(df, col='rated_exposure')
+    # df = fill_missing_value(df, col='rated_exposure')
 
     return df
 
