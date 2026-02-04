@@ -22,11 +22,6 @@ def clean_raw_data(df):
         'Serious Delinquencies in past 2 years': 'serious_delinquencies_past_2_years'
     })
 
-    df = is_missing_value(df, col_orig='monthly_revenue', col_bool='is_missing_revenue')
-
-    df = is_missing_value(df, col_orig='rated_exposure', col_bool='is_missing_rated_exposure')
-    # df = fill_missing_value(df, col='rated_exposure')
-
     return df
 
 def is_missing_value(df, col_orig: str = None, col_bool: str = None):
