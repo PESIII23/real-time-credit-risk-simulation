@@ -1,4 +1,3 @@
-import pandas as pd
 
 def backfill_overdues(df, col_1: str = None, col_2: str = None, col_3: str = None):
     """Enforce monotonic delinquency severity"""
