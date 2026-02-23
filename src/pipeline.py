@@ -30,7 +30,6 @@ class Paths:
     PROCESSED_DATA = PROJECT_ROOT / 'src' / 'data' / 'processed' / 'processed_df.parquet'
     MODELING_DATA = PROJECT_ROOT / 'src' / 'data' / 'processed' / 'modeling_df.parquet'
 
-
 def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Execute the full pipeline. Returns (full_df, modeling_df)."""
     log = print if verbose else lambda *args, **kwargs: None
