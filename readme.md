@@ -1,108 +1,97 @@
 # Real-Time Credit Risk Simulation
 
----
-
-## Project Overview
-This project showcases a lightweight, production-style streaming pipeline for credit risk analysis, where synthetic events based on historical credit data are pushed into an in-memory queue, consumed, preprocessed into a DataFrame, scored with a logistic regression model, and converted into actionable business recommendations. The workflow simulates real-time data ingestion and processing, supporting incremental ML scoring, feature engineering, and data validation within a modular architecture, reflecting production-ready ETL and analytics pipelines commonly used in fintech and real-time decision systems.
+A modular Python pipeline for credit risk analysis with simulated real-time event ingestion, feature engineering, and ML-ready data preparation.
 
 ---
 
-## Key Features
-- **Event Generation:** Converts static CSV data into a simulated real-time event stream.  
-- **Queue-Based Ingestion:** Uses Python’s `queue.Queue` to decouple event arrival from processing.  
-- **DataFrame Storage:** Pulls events into a pandas DataFrame for preprocessing, cleaning, and feature engineering.  
-- **Machine Learning Scoring:** Applies a trained logistic regression model to classify credit risk.  
-- **Business Recommendations:** Converts model output into actionable decisions (e.g., high-risk customer flagging).  
-- **Lightweight & Modular:** Fully implemented in Python with minimal dependencies (`pandas`, `numpy`, `scikit-learn`).  
-- **Simulation of Real-World Scenarios:** Supports missing values, duplicates, and event-order variations.  
-
----
-
-## Tools & Libraries
-- **Python 3.9+**  
-- **pandas** – Data storage, cleaning, and feature engineering  
-- **numpy** – Numerical operations and synthetic data generation  
-- **scikit-learn** – Logistic regression model scoring  
-- **queue / asyncio.Queue** – In-memory queue for event streaming  
-- **matplotlib / seaborn (optional)** – Visualization of results and metrics  
-
----
-
-## Project Workflow
+## Project Structure
 
 ```
-
-CSV Dataset
-│
-▼
-Event Generator (shuffle / synthetic)
-│
-▼
-In-Memory Queue (queue.Queue)
-│
-▼
-Pull Event → Append to pandas DataFrame
-│
-▼
-Data Cleaning & Feature Engineering
-│
-▼
-ML Scoring / Prediction (logistic regression)
-│
-▼
-Business Recommendations / Results DataFrame
-│
-▼
-Optional: Dashboard / Metrics / Logs
-
-````
+src/
+├── pipeline.py              # Main orchestrator (run_pipeline)
+├── events/                  # Event streaming simulation
+│   ├── queue_manager.py     # In-memory event queue
+│   ├── producer.py          # Event generation from raw data
+│   └── consumer.py          # Event consumption and storage
+├── preprocessing/
+│   ├── data_transformations.py  # Cleaning, backfill, missing value tracking
+│   └── feature_engineering.py   # FeatureEngineer class with transforms
+├── models/
+│   └── credit_risk_model.py     # Model data loading utilities
+├── notebooks/
+│   └── credit_risk_analysis.ipynb  # EDA and analysis notebook
+├── data/
+│   ├── raw/                 # Source Excel data
+│   └── processed/           # Parquet outputs
+└── viz/                     # Visualization utilities
+```
 
 ---
 
-## Getting Started
+## Quick Start
 
-1. **Clone the repository:**  
-```bash
-git clone https://github.com/yourusername/credit-risk-pipeline.git
-````
-
-2. **Install dependencies:**
-
+**1. Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Run the simulation:**
+**2. Run the pipeline:**
+```bash
+python -m src.pipeline
+```
 
-* Load your CSV dataset.
-* Generate events into the queue.
-* Pull events into a DataFrame and process through the pipeline.
-* View ML predictions and recommendations.
+**3. Use in Python:**
+```python
+from src.pipeline import run_pipeline, Paths
 
----
-
-## Why This Project is Valuable
-
-* Demonstrates **real-time event handling and ML scoring**, not just batch processing.
-* Provides **hands-on experience with data pipelines, feature engineering, and predictive modeling**.
-* Simulates production-relevant challenges: **data validation, duplicate events, delayed arrivals, and incremental processing**.
-* Ideal for showcasing **data engineering, analytics, and ML deployment skills** to recruiters and interviewers.
+full_df, modeling_df = run_pipeline(verbose=True)
+```
 
 ---
 
-## Future Enhancements
+## Pipeline Stages
 
-* Integrate **lightweight dashboard** for real-time visualization of predictions and metrics.
-* Expand to **async event processing** with `asyncio` or lightweight Kafka for more realistic streaming.
-* Implement **rolling feature computation** or **concept drift detection**.
-* Introduce **multiple ML models** for ensemble scoring or risk comparison.
+| Stage | Description |
+|-------|-------------|
+| **1. Event Ingestion** | Producer-consumer pattern simulates real-time data arrival via queue |
+| **2. Load & Transform** | Backfill overdues, track missing values, clean data |
+| **3. Feature Engineering** | Log transforms, severity scoring, age normalization, KNN imputation, outlier detection |
+| **4. Export** | Save modeling-ready DataFrame to parquet |
+
+---
+
+## Key Features
+
+- **Event Streaming Simulation** – Queue-based ingestion decouples data arrival from processing
+- **Feature Engineering** – Log transforms, severity scoring, business scale, IQR outlier detection
+- **KNN Imputation** – Handles missing values intelligently
+- **Modular Architecture** – Clean separation of concerns across preprocessing, models, and events
+- **Dual Output** – Returns both full DataFrame (all columns) and modeling DataFrame (ML-ready features)
+
+---
+
+## Output
+
+The pipeline produces two DataFrames:
+- `full_df` – Complete dataset with all engineered features
+- `modeling_df` – Subset of features ready for ML training (~13 columns)
+
+Saved to: `src/data/processed/modeling_df.parquet`
+
+---
+
+## Tools & Libraries
+
+- Python 3.9+
+- pandas, numpy – Data manipulation
+- scikit-learn – KNN imputation
+- fastparquet – Efficient data storage
+- matplotlib, seaborn – Visualization (notebook)
 
 ---
 
 ## Support
 
-- Email: [pesmithiii7@gmail.com]
-- Documentation: 
-    [Milestone 1](https://docs.google.com/document/d/1PcnBauANcs5RhZ9chxNYY3yiQkt74uMr-pRhGO5KiDA/edit?usp=drive_link) | 
-    [Milestone 2](https://docs.google.com/document/d/1exCDFc11iXaxxlIqDk0IfU_Q_Ih7CzlDFMKyCwI5g9g/edit?usp=sharing)
+- Email: pesmithiii7@gmail.com
+- Documentation: [Milestone 1](https://docs.google.com/document/d/1PcnBauANcs5RhZ9chxNYY3yiQkt74uMr-pRhGO5KiDA/edit?usp=drive_link) | [Milestone 2](https://docs.google.com/document/d/1exCDFc11iXaxxlIqDk0IfU_Q_Ih7CzlDFMKyCwI5g9g/edit?usp=sharing)
 - Repository: [GitHub](https://github.com/PESIII23/real-time-credit-risk-simulation)
