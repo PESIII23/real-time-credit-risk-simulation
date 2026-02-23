@@ -20,6 +20,7 @@ def is_missing_value(df: pd.DataFrame, col_orig: str, col_bool: str) -> pd.DataF
 
 
 def apply_all_transformations(df: pd.DataFrame) -> pd.DataFrame:
+    print(f"      Applying transformations.")
     """Apply all transformations in sequence."""
     df = backfill_overdues(df, 'overdue_30_59_days', 'overdue_60_89_days', 'overdue_90_plus_days')
     df = is_missing_value(df, 'monthly_revenue', 'revenue_missing')

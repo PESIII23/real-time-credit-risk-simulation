@@ -1,6 +1,7 @@
 """Credit risk prediction models."""
 import pandas as pd
 from pathlib import Path
+from sklearn.linear_model import LogisticRegression
 
 
 PROJECT_ROOT = Path('/Users/phillipsmith/Desktop/pythonProjects/real-time-credit-risk-simulation')
@@ -14,11 +15,10 @@ def load_modeling_data() -> pd.DataFrame:
     return pd.read_parquet(MODELING_PATH, engine='fastparquet')
 
 
-# TODO: Implement classifier
-# class CreditRiskClassifier:
-#     def __init__(self):
-#         self.model = LogisticRegression()
-#     def train(self, X, y):
-#         self.model.fit(X, y)
-#     def predict(self, X):
-#         return self.model.predict(X)
+class CreditRiskClassifier:
+    def __init__(self):
+        self.model = LogisticRegression()
+    def train(self, X, y):
+        self.model.fit(X, y)
+    def predict(self, X):
+        return self.model.predict(X)

@@ -16,7 +16,7 @@ class Producer:
 
     def generate_events(self):
         """Simulate event generation from CSV"""
-        print(f"Event producing has initiated.\n")
+        print(f"      Event producing has initiated.")
         for _, row in self.excel.iterrows():
             event = row.to_dict()
             if not self.queue.full():

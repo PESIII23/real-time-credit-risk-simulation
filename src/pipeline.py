@@ -35,12 +35,14 @@ def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Execute the full pipeline. Returns (full_df, modeling_df)."""
     log = print if verbose else lambda *args, **kwargs: None
     
+    # Header
+    print()
     log("=" * 60)
     log("CREDIT RISK ANALYSIS PIPELINE")
     log("=" * 60)
     
     # Stage 1: Event Ingestion
-    log("\n[1/4] Running event ingestion...")
+    log("\n[1/4] RUNNING EVENT INGESTION FROM DATA SOURCE...")
     queue = EventQueue()
     producer = Producer(str(Paths.RAW_DATA), queue)
     consumer = Consumer(queue)
@@ -51,19 +53,19 @@ def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     producer_thread.join()
     consumer_thread.join()
     
-    # Stage 2: Load & Transform
-    log("\n[2/4] Loading and transforming data...")
+    # Stage 2: Load & Transform Data
+    log("\n[2/4] LOADING & TRANSFORMING DATA...")
     df = pd.read_parquet(Paths.PROCESSED_DATA, engine='fastparquet')
-    log(f"      Loaded {len(df):,} records")
+    log(f"      Loaded {len(df):,} records.")
     df = data_transformations.apply_all_transformations(df)
     
     # Stage 3: Feature Engineering
-    log("\n[3/4] Engineering features...")
+    log("\n[3/4] ENGINEERING FEATURES...")
     full_df, modeling_df = engineer_features(df, n_neighbors=5)
     log(f"      Created {len(modeling_df.columns)} features")
     
-    # Stage 4: Export
-    log("\n[4/4] Exporting modeling data...")
+    # Stage 4: Export Modeling Dataframe
+    log("\n[4/4] EXPORTING MODELING DATA...")
     Paths.MODELING_DATA.parent.mkdir(parents=True, exist_ok=True)
     modeling_df.to_parquet(Paths.MODELING_DATA, engine='fastparquet', index=False)
     
