@@ -84,7 +84,7 @@ class FeatureEngineer:
             'age_normalized', 'monthly_revenue_log', 'debt_ratio_log', 'rated_exposure_log',
             'overdue_severity', 'revenue_missing', 'debt_ratio_missing', 'rated_exposure_missing',
             'revenue_outlier', 'debt_ratio_outlier', 'rated_exposure_outlier', 'overdue_severity_outlier',
-            'business_scale'
+            'business_scale', 'serious_delinquencies_past_2_years'
         ]
         existing = [col for col in modeling_columns if col in self.df.columns]
         return self.df[existing].copy()
