@@ -22,7 +22,6 @@ from src.preprocessing import data_transformations
 from src.preprocessing.feature_engineering import engineer_features
 from src.models.credit_risk_model import CreditRiskClassifier
 
-
 # Config
 PROJECT_ROOT = Path('/Users/phillipsmith/Desktop/pythonProjects/real-time-credit-risk-simulation')
 
