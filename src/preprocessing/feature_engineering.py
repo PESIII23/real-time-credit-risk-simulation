@@ -7,7 +7,7 @@ from sklearn.impute import KNNImputer
 class FeatureEngineer:
     """Transforms raw data into model-ready features."""
     
-    SEVERITY_WEIGHTS = {'low': 1, 'med': 2, 'high': 3, 'critical': 5}
+    SEVERITY_WEIGHTS = {'low': 1, 'med': 2, 'high': 3}
     
     def __init__(self, df: pd.DataFrame):
         self.df = df.copy()
@@ -30,8 +30,7 @@ class FeatureEngineer:
         self.df['overdue_severity'] = (
             (self.df['overdue_30_59_days'] * w['low']) +
             (self.df['overdue_60_89_days'] * w['med']) +
-            (self.df['overdue_90_plus_days'] * w['high']) +
-            (self.df['serious_delinquencies_past_2_years'] * w['critical'])
+            (self.df['overdue_90_plus_days'] * w['high'])
         )
         self.df['overdue_severity_log'] = np.log1p(self.df['overdue_severity'])
         return self
@@ -84,7 +83,7 @@ class FeatureEngineer:
             'age_normalized', 'monthly_revenue_log', 'debt_ratio_log', 'rated_exposure_log',
             'overdue_severity', 'revenue_missing', 'debt_ratio_missing', 'rated_exposure_missing',
             'revenue_outlier', 'debt_ratio_outlier', 'rated_exposure_outlier', 'overdue_severity_outlier',
-            'business_scale'
+            'business_scale', 'serious_delinquencies_past_2_years'
         ]
         existing = [col for col in modeling_columns if col in self.df.columns]
         return self.df[existing].copy()

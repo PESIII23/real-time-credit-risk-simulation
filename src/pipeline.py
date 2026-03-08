@@ -20,7 +20,7 @@ from src.events.producer import Producer
 from src.events.consumer import Consumer
 from src.preprocessing import data_transformations
 from src.preprocessing.feature_engineering import engineer_features
-
+from src.models.credit_risk_model import CreditRiskClassifier
 
 # Config
 PROJECT_ROOT = Path('/Users/phillipsmith/Desktop/pythonProjects/real-time-credit-risk-simulation')
@@ -29,7 +29,6 @@ class Paths:
     RAW_DATA = PROJECT_ROOT / 'src' / 'data' / 'raw' / 'dataset_project_1.xlsx'
     PROCESSED_DATA = PROJECT_ROOT / 'src' / 'data' / 'processed' / 'processed_df.parquet'
     MODELING_DATA = PROJECT_ROOT / 'src' / 'data' / 'processed' / 'modeling_df.parquet'
-
 
 def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Execute the full pipeline. Returns (full_df, modeling_df)."""
@@ -65,9 +64,21 @@ def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     log(f"      Created {len(modeling_df.columns)} features")
     
     # Stage 4: Export Modeling Dataframe
-    log("\n[4/4] EXPORTING MODELING DATA...")
+    log("\n[4/5] EXPORTING MODELING DATA...")
     Paths.MODELING_DATA.parent.mkdir(parents=True, exist_ok=True)
     modeling_df.to_parquet(Paths.MODELING_DATA, engine='fastparquet', index=False)
+
+    # Stage 5: Apply Logistic Regression
+    log("\n[5/5] APPLYING LOGISTIC REGRESSION TO MODELING DATA...")
+    classifier = CreditRiskClassifier(test_size=0.5, random_state=24)
+    classifier.fit_and_evaluate(modeling_df)
+    log(f"      Confusion Matrix:\n{classifier.cnf_matrix}")
+    log(f"      AUC Score: {classifier.get_auc_score():.4f}")
+    log(f"\n{classifier.get_classification_report()}")
+    
+    # Display plots
+    classifier.evaluate(plot=True)
+    classifier.plot_roc_curve()
     
     # Summary
     log("\n" + "=" * 60)
@@ -77,7 +88,6 @@ def run_pipeline(verbose: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     log(f"Modeling DataFrame: {modeling_df.shape}")
     
     return full_df, modeling_df
-
 
 if __name__ == "__main__":
     run_pipeline(verbose=True)
