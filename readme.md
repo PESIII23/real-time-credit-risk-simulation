@@ -93,5 +93,5 @@ Saved to: `src/data/processed/modeling_df.parquet`
 ## Support
 
 - Email: pesmithiii7@gmail.com
-- Documentation: [Milestone 1](https://docs.google.com/document/d/1PcnBauANcs5RhZ9chxNYY3yiQkt74uMr-pRhGO5KiDA/edit?usp=drive_link) | [Milestone 2](https://docs.google.com/document/d/1exCDFc11iXaxxlIqDk0IfU_Q_Ih7CzlDFMKyCwI5g9g/edit?usp=sharing)
+- Documentation: [Milestone 1](https://docs.google.com/document/d/1n_Ax6L1oHhXIFzeBivhR5M_PVg2rcupMoBMyOIXFQ0c/edit?usp=sharing) | [Milestone 2](https://docs.google.com/document/d/1exCDFc11iXaxxlIqDk0IfU_Q_Ih7CzlDFMKyCwI5g9g/edit?usp=sharing) | [Milestone 3](https://docs.google.com/presentation/d/1hs3CDKTNiScS_9bKjTsbbIccIQEm4ypH9ZAxYqRvCow/edit?usp=sharing)
 - Repository: [GitHub](https://github.com/PESIII23/real-time-credit-risk-simulation)
